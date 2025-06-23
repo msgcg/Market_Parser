@@ -1,0 +1,10 @@
+Django
+selenium
+selenium-stealth
+beautifulsoup4
+requests
+openpyxl
+python-telegram-bot[httpx]
+retry
+gspread
+google-oauth2-service-account

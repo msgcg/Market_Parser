@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Парсер Lamoda</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Стили для страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            color: #000000;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #000000;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Парсер категорий Lamoda</h1>
+    <div class="form-container">
+        <form method="post" action="{% url 'category_parsing_lm' %}">
+            {% csrf_token %}
+            <label for="category_url">Ссылка на категорию:</label>
+            <input type="url" id="category_url" name="category_url" placeholder="https://www.lamoda.ru/c/..." required>
+            <button type="submit">Начать парсинг</button>
+        </form>
+    </div>
+
+    {% if results %}
+        <h2>Результаты парсинга</h2>
+        <div class="card-container">
+            {% for item in results %}
+                <div class="card">
+                    <h3>{{ item.title }}</h3>
+                    <p><strong>Артикул:</strong> {{ item.article }}</p>
+                    <p><strong>Цена:</strong>
+                        {% if item.price is not none %}
+                            {{ item.price }} руб.
+                        {% else %}
+                            Цена не указана
+                        {% endif %}
+                    </p>
+                    <p><strong>Старая цена:</strong>
+                        {% if item.price_old is not none %}
+                            {{ item.price_old }} руб.
+                        {% else %}
+                            Нет
+                        {% endif %}
+                    </p>
+                     <p><strong>Новая цена:</strong>
+                        {% if item.price_new is not none %}
+                            {{ item.price_new }} руб.
+                        {% else %}
+                            Нет
+                        {% endif %}
+                    </p>
+                    <p><strong>Бренд:</strong> {{ item.brand }}</p>
+                    <p><strong>Ссылка:</strong> <a href="{{ item.full_url }}" target="_blank">Открыть товар</a></p>
+                    <p><strong>Дата обновления:</strong> {{ item.update_date }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% elif error_message %}
+        <div class="error-message">
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
+</body>
+</html>

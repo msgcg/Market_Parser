@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Парсер Яндекс Маркет</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Стили для страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            color: #ffc400;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #ffc400;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ffc400;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #ffc400;
+            text-decoration: none;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Парсер категорий Яндекс Маркета</h1>
+    <div class="form-container">
+        <form method="post" action="{% url 'category_parsing_y' %}">  <!-- Замените 'category_parsing_y' на ваше имя URL -->
+            {% csrf_token %}
+            <label for="category_url">Ссылка на категорию:</label>
+            <input type="text" id="category_url" name="category_url" placeholder="https://market.yandex.ru/catalog--..." required>
+            <button type="submit">Начать парсинг</button>
+        </form>
+    </div>
+
+    {% if results %}
+        <h2>Результаты парсинга</h2>
+        <div class="card-container">
+            {% for item in results %}
+                <div class="card">
+                    <div class="image-container">
+                        {% if item.imageUrl and item.imageUrl != "Нет изображения" %}
+                            <img src="{{ item.imageUrl }}" alt="{{ item.name }}">
+                        {% else %}
+                            <p>Нет изображения</p>
+                        {% endif %}
+                    </div>
+                    <h3>{{ item.name }}</h3>
+                    <p><strong>Цена:</strong>
+                        {% if item.price != "Цена не указана" %}
+                            {{ item.price }} руб.
+                        {% else %}
+                            {{ item.price }}
+                        {% endif %}
+                    </p>
+                    <p><strong>Старая цена:</strong>
+                        {% if item.old_price != "Старая цена не указана" %}
+                           {{ item.old_price }} руб.
+                        {% else %}
+                           {{ item.old_price }}
+                        {% endif %}
+                    </p>
+                    <p><strong>Бренд:</strong> {{ item.brand }}</p>
+                    <p><strong>Описание:</strong> {{ item.description }}</p>
+                    <p><strong>Дата обновления данных:</strong> {{ item.update }}</p>
+                    <p><strong>Ссылка:</strong> <a href="{{ item.url }}" target="_blank">Открыть товар</a></p>
+                   <!-- <p><strong>modelId:</strong> {{ item.modelId }}</p> -->
+                   <!-- <p><strong>marketSku:</strong> {{ item.marketSku }}</p> -->
+                    <!-- Дополнительные поля, если нужны -->
+                </div>
+            {% endfor %}
+        </div>
+    {% elif error_message %}
+        <div class="error-message">
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
+
+</body>
+</html>

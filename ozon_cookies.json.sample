@@ -1,0 +1,17 @@
+{
+    "selenium": [
+        {
+            "domain": ".ozon.ru",
+            "expiry": 1748300000,
+            "httpOnly": true,
+            "name": "session_id",
+            "path": "/",
+            "sameSite": "Lax",
+            "secure": true,
+            "value": "your_session_id_here"
+        }
+    ],
+    "requests": {
+        "session_id": "your_session_id_here"
+    }
+}
