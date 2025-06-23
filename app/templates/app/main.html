@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace Analytics</title>
+    <link rel="stylesheet" href="{% static 'app/content/site.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">Marketplace<span>Analytics</span></a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/google-sheets">Google Sheets</a></li>
+                <li><a href="/competitor-prices">Competitors</a></li>
+                <li><a href="/niche-analysis">Niches</a></li>
+                <li><a href="/parsing-ozon">Ozon</a></li>
+                <li><a href="/parsing-wildberries">Wildberries</a></li>
+                <li><a href="/parsing-yandexmarket">Яндекс Маркет</a></li>
+                <li><a href="/parsing-lamoda">Lamoda</a></li>
+                <li><a href="/sales-predictions">Predictions</a></li>
+            </ul>
+            <a href="/login" class="login-btn">Login</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <h1>Analyze. Predict. Succeed.</h1>
+            <p>Your ultimate marketplace analytics tool to track competitors, explore niches, and boost sales!</p>
+            <a href="#features" class="cta-button">Explore Features</a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Why Choose Us?</h2>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <img src="{% static 'images/google-sheets.png' %}" alt="Google Sheets Integration">
+                    <h3>Seamless Integration</h3>
+                    <p>Export data effortlessly to Google Sheets for deep analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="{% static 'images/competitor-prices.png' %}" alt="Competitor Prices">
+                    <h3>Real-Time Insights</h3>
+                    <p>Track competitor prices to stay ahead in the market.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="{% static 'images/niche-analysis.png' %}" alt="Niche Analysis">
+                    <h3>Discover New Niches</h3>
+                    <p>Find untapped opportunities in your market.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Call-to-Action Section -->
+    <section class="get-started">
+        <div class="container">
+            <button class="cta-button start-button" id="startButton">Начать пользоваться</button>
+        </div>
+    </section>
+
+    <!-- Modal Window -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeButton">&times;</span>
+            <h2>Добро пожаловать!</h2>
+            <form action="/login" method="POST" class="modal-form">
+                <input type="text" name="username" placeholder="Имя пользователя" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <button type="submit" class="modal-button">Войти</button>
+            </form>
+            <p>Нет аккаунта? <a href="/register">Зарегистрируйтесь</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Marketplace Analytics. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="{% static 'app/js/script.js' %}"></script>
+</body>
+</html>
+

@@ -1,0 +1,12 @@
+{
+    "selenium": [
+        {
+            "domain": ".lamoda.ru",
+            "name": "session",
+            "value": "your_session_value_here"
+        }
+    ],
+    "requests": {
+        "session": "your_session_value_here"
+    }
+}

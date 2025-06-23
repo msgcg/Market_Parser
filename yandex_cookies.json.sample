@@ -1,0 +1,12 @@
+{
+    "selenium": [
+        {
+            "domain": ".yandex.ru",
+            "name": "yandexuid",
+            "value": "your_yandex_uid_here"
+        }
+    ],
+    "requests": {
+        "yandexuid": "your_yandex_uid_here"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "selenium": [
+        {
+            "domain": ".wildberries.ru",
+            "name": "WILDAUTHNEW_V3",
+            "value": "your_auth_token_here"
+        }
+    ],
+    "requests": {
+        "WILDAUTHNEW_V3": "your_auth_token_here"
+    }
+}
