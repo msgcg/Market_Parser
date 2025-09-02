@@ -67,7 +67,7 @@
 ## 📂 Структура проекта
 
 ```
-Market_Parser-1/
+Market_Parser/
 ├── app/                  # Django-приложение парсера
 │   ├── migrations/
 │   ├── static/
